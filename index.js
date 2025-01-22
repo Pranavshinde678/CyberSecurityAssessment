@@ -18,12 +18,13 @@ document.getElementById("startAssessmentBtn").addEventListener("click", function
   const idPattern = /^V\d+$/; 
 
   if (!idPattern.test(employeeIDInput)) {
-    quizstarted=false;
     alert("Invalid Employee ID.");
     return;
   }
+  else{
 
   startQuiz();
+  }
 });
 let quizstarted=false;
 
