@@ -28,7 +28,7 @@ let tabSwitchCount = 0;
 window.addEventListener("blur", () => {
   if (!quizstarted) return;
   tabSwitchCount++;
-    if (tabSwitchCount > 0 && tabSwitchCount<=2) {
+    if (tabSwitchCount > 0 && quizstarted) {
       alert("Do not switch tabs as it will lead to the quiz being submitted!")
   }
     if (tabSwitchCount > 2) {
