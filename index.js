@@ -24,16 +24,18 @@ let quizstarted=false;
 
 
 let tabSwitchCount = 0;
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden" && quizstarted) {
+    tabSwitchCount++;  
 
-window.addEventListener("blur", () => {
-  if (!quizstarted) return;
-  tabSwitchCount++;
-    if (tabSwitchCount > 0 && quizstarted) {
-      alert("Do not switch tabs as it will lead to the quiz being submitted!")
-  }
-    if (tabSwitchCount > 2) {
-        endQuizDueToTabSwitch();
+    if (tabSwitchCount <= 2) {
+      alert("Do not switch tabs as it will lead to the quiz being submitted!");
     }
+
+    if (tabSwitchCount > 2) {
+      endQuizDueToTabSwitch();  
+    }
+  }
 });
 
 function endQuizDueToTabSwitch() {
