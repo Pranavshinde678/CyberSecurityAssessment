@@ -8,32 +8,42 @@ window.addEventListener("beforeunload", function (e) {
   e.returnValue = '';  
 });
 
+let quizstarted = false; // Flag to track if the quiz has started
+let tabSwitchCount = 0;
 
 document.getElementById("startAssessmentBtn").addEventListener("click", function () {
   const employeeIDInput = document.getElementById("employeeID").value.trim();
-  const idPattern = /^V\d+$/; 
 
-  if (!idPattern.test(employeeIDInput)) {
-    alert("Invalid Employee ID.");
-    return;
+  // New validation logic
+  const isValidEmployeeID = validateEmployeeID(employeeIDInput);
+
+  if (!isValidEmployeeID) {
+    alert("Invalid Employee ID. It should start with 'V' followed by numeric characters, e.g., 'V123'.");
+    return; // Stop execution if the ID is invalid
   }
 
-  startQuiz();
+  // Start the quiz if the ID is valid
+  startQuiz(employeeIDInput);
 });
-let quizstarted=false;
 
+// Function to validate Employee ID
+function validateEmployeeID(id) {
+  if (!id.startsWith("V")) return false; // Must start with 'V'
+  const numericPart = id.substring(1);
+  if (numericPart.length === 0 || isNaN(numericPart)) return false; // Must have numeric part
+  return true; // Valid if all conditions are met
+}
 
-let tabSwitchCount = 0;
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden" && quizstarted) {
-    tabSwitchCount++;  
+    tabSwitchCount++;
 
     if (tabSwitchCount <= 2) {
       alert("Do not switch tabs as it will lead to the quiz being submitted!");
     }
 
     if (tabSwitchCount > 2) {
-      endQuizDueToTabSwitch();  
+      endQuizDueToTabSwitch();
     }
   }
 });
@@ -229,8 +239,7 @@ const nextBtn = document.getElementById("nextBtn");
 nextBtn.disabled = true;
 backBtn.addEventListener("click", previousQuestion);
 
-function startQuiz() {
- 
+function startQuiz(employeeID) {
   console.log('Quiz started');
   const employeeID = employeeIDInput.value.trim();
   console.log('Employee ID:', employeeID);
@@ -238,7 +247,6 @@ function startQuiz() {
   // backBtn.disabled = false;
 
   startTimer(20 * 60);
-   quizstarted=true;
   document.getElementById('popupContainer').style.display = 'none';
   document.getElementById('quiz-container').style.display = 'block';
 }
