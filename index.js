@@ -18,12 +18,12 @@ document.getElementById("startAssessmentBtn").addEventListener("click", function
   const idPattern = /^V\d+$/; 
 
   if (!idPattern.test(employeeIDInput)) {
-    alert("Invalid Employee ID.");
-    quizstarted = false; 
-    return;  
+    alert("Invalid Employee ID. It must start with 'V' followed by numbers only.");
+    return;
   }
 
-  startQuiz();  
+  startQuiz();
+});
 });
 let quizstarted=false;
 
