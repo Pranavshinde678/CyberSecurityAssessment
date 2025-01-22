@@ -1,4 +1,46 @@
 "use strict";
+document.addEventListener("contextmenu", (e) => e.preventDefault());
+document.addEventListener("copy", (e) => e.preventDefault());
+document.addEventListener("paste", (e) => e.preventDefault());
+
+window.addEventListener("beforeunload", function (e) {
+  e.preventDefault();
+  e.returnValue = '';  
+});
+
+
+document.getElementById("startAssessmentBtn").addEventListener("click", function () {
+  const employeeIDInput = document.getElementById("employeeID").value.trim();
+  const idPattern = /^V\d+$/; 
+
+  if (!idPattern.test(employeeIDInput)) {
+    alert("Invalid Employee ID. It must start with 'V' followed by numbers only.");
+    return;
+  }
+
+  startQuiz();
+});
+let quizstarted=false;
+
+
+let tabSwitchCount = 0;
+
+window.addEventListener("blur", () => {
+  if (!quizstarted) return;
+  tabSwitchCount++;
+    if (tabSwitchCount > 0 && tabSwitchCount<=2) {
+      alert("Do not switch tabs as it will lead to the quiz being submitted!")
+  }
+    if (tabSwitchCount > 2) {
+        endQuizDueToTabSwitch();
+    }
+});
+
+function endQuizDueToTabSwitch() {
+  quizstarted=false;
+  alert("You have switched tabs more than twice. The quiz has ended.");
+  displayResults();
+}
 
 const quizData = [
   {
@@ -186,6 +228,7 @@ nextBtn.disabled = true;
 backBtn.addEventListener("click", previousQuestion);
 
 function startQuiz() {
+  quizstarted=true;
   console.log('Quiz started');
   const employeeID = employeeIDInput.value.trim();
   console.log('Employee ID:', employeeID);
