@@ -8,30 +8,28 @@ window.addEventListener("beforeunload", function (e) {
   e.returnValue = '';  
 });
 
-let quizstarted = false; // Flag to track if the quiz has started
+let quizstarted = false; 
 let tabSwitchCount = 0;
 
 document.getElementById("startAssessmentBtn").addEventListener("click", function () {
   const employeeIDInput = document.getElementById("employeeID").value.trim();
 
-  // New validation logic
   const isValidEmployeeID = validateEmployeeID(employeeIDInput);
 
   if (!isValidEmployeeID) {
-    alert("Invalid Employee ID. It should start with 'V' followed by numeric characters, e.g., 'V123'.");
-    return; // Stop execution if the ID is invalid
+    alert("Invalid Employee ID");
+    return; 
   }
 
-  // Start the quiz if the ID is valid
   startQuiz(employeeIDInput);
 });
 
-// Function to validate Employee ID
+
 function validateEmployeeID(id) {
-  if (!id.startsWith("V")) return false; // Must start with 'V'
+  if (!id.startsWith("V")) return false; 
   const numericPart = id.substring(1);
-  if (numericPart.length === 0 || isNaN(numericPart)) return false; // Must have numeric part
-  return true; // Valid if all conditions are met
+  if (numericPart.length === 0 || isNaN(numericPart)) return false; 
+  return true; 
 }
 
 document.addEventListener("visibilitychange", () => {
