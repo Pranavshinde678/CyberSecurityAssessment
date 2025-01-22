@@ -14,7 +14,7 @@ document.getElementById("startAssessmentBtn").addEventListener("click", function
   const idPattern = /^V\d+$/; 
 
   if (!idPattern.test(employeeIDInput)) {
-    alert("Invalid Employee ID. It must start with 'V' followed by numbers only.");
+    alert("Invalid Employee ID.");
     return;
   }
 
@@ -228,7 +228,7 @@ nextBtn.disabled = true;
 backBtn.addEventListener("click", previousQuestion);
 
 function startQuiz() {
-  quizstarted=true;
+ 
   console.log('Quiz started');
   const employeeID = employeeIDInput.value.trim();
   console.log('Employee ID:', employeeID);
@@ -236,6 +236,7 @@ function startQuiz() {
   // backBtn.disabled = false;
 
   startTimer(20 * 60);
+   quizstarted=true;
   document.getElementById('popupContainer').style.display = 'none';
   document.getElementById('quiz-container').style.display = 'block';
 }
