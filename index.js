@@ -17,14 +17,14 @@ document.getElementById("startAssessmentBtn").addEventListener("click", function
   const employeeIDInput = document.getElementById("employeeID").value.trim();
   const idPattern = /^V\d+$/; 
 
+  // Validate the Employee ID
   if (!idPattern.test(employeeIDInput)) {
     alert("Invalid Employee ID.");
-    return;
+    quizstarted = false;  // Ensure quizstarted remains false when ID is invalid
+    return;  // Return early to prevent quiz from starting
   }
-  else{
 
-  startQuiz();
-  }
+  startQuiz();  // Start the quiz only if the ID is valid
 });
 let quizstarted=false;
 
