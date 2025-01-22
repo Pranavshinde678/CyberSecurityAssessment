@@ -8,10 +8,6 @@ window.addEventListener("beforeunload", function (e) {
   e.returnValue = '';  
 });
 
-window.addEventListener("focus", () => {
-  if (quizstarted) tabSwitchCount = 0;
-});
-
 
 document.getElementById("startAssessmentBtn").addEventListener("click", function () {
   const employeeIDInput = document.getElementById("employeeID").value.trim();
@@ -24,7 +20,6 @@ document.getElementById("startAssessmentBtn").addEventListener("click", function
 
   startQuiz();
 });
-});
 let quizstarted=false;
 
 
@@ -33,10 +28,10 @@ let tabSwitchCount = 0;
 window.addEventListener("blur", () => {
   if (!quizstarted) return;
   tabSwitchCount++;
-    if (tabSwitchCount > 0 && tabSwitchCount<=2 && quizstarted) {
+    if (tabSwitchCount > 0 && tabSwitchCount<=2) {
       alert("Do not switch tabs as it will lead to the quiz being submitted!")
   }
-    if (tabSwitchCount > 2 && quizstarted) {
+    if (tabSwitchCount > 2) {
         endQuizDueToTabSwitch();
     }
 });
@@ -233,6 +228,7 @@ nextBtn.disabled = true;
 backBtn.addEventListener("click", previousQuestion);
 
 function startQuiz() {
+  quizstarted=true;
   console.log('Quiz started');
   const employeeID = employeeIDInput.value.trim();
   console.log('Employee ID:', employeeID);
@@ -242,7 +238,6 @@ function startQuiz() {
   startTimer(20 * 60);
   document.getElementById('popupContainer').style.display = 'none';
   document.getElementById('quiz-container').style.display = 'block';
-   quizstarted=true;
 }
 
 const saveBtn = document.getElementById("saveBtn");
