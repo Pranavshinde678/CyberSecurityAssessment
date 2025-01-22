@@ -4,36 +4,16 @@ document.addEventListener("copy", (e) => e.preventDefault());
 document.addEventListener("paste", (e) => e.preventDefault());
 
 window.addEventListener("beforeunload", function (e) {
-  e.preventDefault();
   e.returnValue = '';  
 });
 
-let quizstarted = false; 
+let quizstarted = false;
 let tabSwitchCount = 0;
 
-document.getElementById("startAssessmentBtn").addEventListener("click", function () {
-  const employeeIDInput = document.getElementById("employeeID").value.trim();
-
-  const isValidEmployeeID = validateEmployeeID(employeeIDInput);
-
-  if (!isValidEmployeeID) {
-    alert("Invalid Employee ID");
-    return; 
-  }
-
-  startQuiz(employeeIDInput);
-});
-
-
-function validateEmployeeID(id) {
-  if (!id.startsWith("V")) return false; 
-  const numericPart = id.substring(1);
-  if (numericPart.length === 0 || isNaN(numericPart)) return false; 
-  return true; 
-}
-
 document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden" && quizstarted) {
+  if (!quizstarted) return; // Check if the quiz has started
+  
+  if (document.visibilityState === "hidden") {
     tabSwitchCount++;
 
     if (tabSwitchCount <= 2) {
@@ -47,10 +27,15 @@ document.addEventListener("visibilitychange", () => {
 });
 
 function endQuizDueToTabSwitch() {
-  quizstarted=false;
+  quizstarted = false; // Stop the quiz
   alert("You have switched tabs more than twice. The quiz has ended.");
-  displayResults();
+  if (typeof displayResults === "function") {
+    displayResults();
+  } else {
+    console.error("displayResults function is not defined.");
+  }
 }
+
 
 const quizData = [
   {
@@ -237,7 +222,8 @@ const nextBtn = document.getElementById("nextBtn");
 nextBtn.disabled = true;
 backBtn.addEventListener("click", previousQuestion);
 
-function startQuiz(employeeID) {
+function startQuiz() {
+  quizstarted=true;
   console.log('Quiz started');
   const employeeID = employeeIDInput.value.trim();
   console.log('Employee ID:', employeeID);
