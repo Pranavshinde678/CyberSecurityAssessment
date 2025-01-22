@@ -8,12 +8,17 @@ window.addEventListener("beforeunload", function (e) {
   e.returnValue = '';  
 });
 
+window.addEventListener("focus", () => {
+  if (quizstarted) tabSwitchCount = 0;
+});
+
 
 document.getElementById("startAssessmentBtn").addEventListener("click", function () {
   const employeeIDInput = document.getElementById("employeeID").value.trim();
   const idPattern = /^V\d+$/; 
 
   if (!idPattern.test(employeeIDInput)) {
+    quizstarted=false;
     alert("Invalid Employee ID.");
     return;
   }
