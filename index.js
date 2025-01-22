@@ -14,7 +14,7 @@ document.getElementById("startAssessmentBtn").addEventListener("click", function
   const idPattern = /^V\d+$/; 
 
   if (!idPattern.test(employeeIDInput)) {
-    alert("Invalid Employee ID. It must start with 'V' followed by numbers only.");
+    alert("Invalid Employee ID.");
     return;
   }
 
