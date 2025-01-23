@@ -12,6 +12,7 @@ The **Cybersecurity Awareness Quiz Application** is designed to educate employee
 - **Interactive Learning**: Receive immediate feedback on your responses to reinforce understanding of correct security practices.
 - **Scoring and Results**: At the end of the quiz, get a score, percentage, and a remark indicating your cybersecurity awareness level.
 - **Timer**: A countdown timer adds a challenge, encouraging prompt responses and simulating real-time decision-making.
+- **Anti-Cheat Mechanism**: Prevent cheating with features such as randomizing question order, disabling the ability to switch between questions once answered, and tracking time spent on each question. Suspicious activity triggers a warning or disqualification, ensuring fair play and integrity.
 
 ## 🎯 Objective
 
