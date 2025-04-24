@@ -524,18 +524,37 @@ const employeeIDDisplay = document.getElementById('employeeIDDisplay');
 
 
 
-startAssessmentBtn.addEventListener('click', function() {
-    const employeeID = employeeIDInput.value.trim();
+startAssessmentBtn.addEventListener('click', async function () {
+  const employeeID = employeeIDInput.value.trim();
 
-   
-    if (employeeID === '') {
-        alert('Please enter Employee ID.');
-        return;
-    }
+  if (employeeID === '') {
+    alert('Please enter Employee ID.');
+    return;
+  }
 
+  // Validate employee ID
+  const match = employeeID.match(/^VK(\d{4})$/);
+  if (!match || parseInt(match[1]) < 1000 || parseInt(match[1]) > 2000) {
+    alert('Access denied. Invalid Employee ID.');
+    return;
+  }
 
-    startQuiz();
-    // startTimer();
+  // Request fullscreen
+  try {
+    await document.documentElement.requestFullscreen();
+  } catch (err) {
+    alert("Fullscreen mode couldn't be activated. Please allow fullscreen access.");
+    return;
+  }
+
+  startQuiz();
+});
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && quizstarted) {
+    alert("You have exited fullscreen mode. The quiz will now end.");
+    displayResults();
+  }
 });
 
 
